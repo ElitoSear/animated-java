@@ -16,6 +16,7 @@ const VERSIONS = {
 	'1.21.2': _1_21_2,
 	'1.21.4': _1_21_4,
 	'1.21.5': _1_21_4,
+	'1.21.6': _1_21_4,
 }
 
 interface ResourcePackCompilerOptions {
@@ -67,9 +68,9 @@ export default async function compileResourcePack(
 		const versionedResourcePackFolder =
 			targetVersions.length > 1
 				? PathModule.join(
-						options.resourcePackFolder,
-						`animated_java_${version.replaceAll('.', '_')}`
-				  )
+					options.resourcePackFolder,
+					`animated_java_${version.replaceAll('.', '_')}`
+				)
 				: options.resourcePackFolder
 
 		// Move paths into versioned overlay folders.

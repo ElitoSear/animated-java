@@ -15,10 +15,18 @@ import static_1_21_4 from './1.21.4/static.mcb'
 import animation_1_21_5 from './1.21.5/animation.mcb'
 import static_1_21_5 from './1.21.5/static.mcb'
 
+import animation_1_21_6 from './1.21.6/animation.mcb'
+import static_1_21_6 from './1.21.6/static.mcb'
+
 // The core is content that always goes in the `data` folder directly,
 // while other files are in the `animated_java/data` folder to be overlayed when the correct version is loaded.
 
 export default {
+	'1.21.6': {
+		animation: animation_1_21_6,
+		static: static_1_21_6,
+		core: core_1_20_4,
+	},
 	'1.21.5': {
 		animation: animation_1_21_5,
 		static: static_1_21_5,

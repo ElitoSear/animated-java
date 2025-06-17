@@ -3,7 +3,7 @@ import { getDataPackFormat } from '../util/minecraftUtil'
 import { IntentionalExportError } from './exporter'
 import { sortObjectKeys } from './util'
 
-export type MinecraftVersion = '1.20.4' | '1.20.5' | '1.21.0' | '1.21.2' | '1.21.4' | '1.21.5'
+export type MinecraftVersion = '1.20.4' | '1.20.5' | '1.21.0' | '1.21.2' | '1.21.4' | '1.21.5' | '1.21.6'
 
 interface OldSerializedAJMeta {
 	[key: string]: {
@@ -35,7 +35,7 @@ export class AJMeta {
 		public exportNamespace: string,
 		public lastUsedExportNamespace: string,
 		public rootFolder: string
-	) {}
+	) { }
 
 	read() {
 		if (!fs.existsSync(this.path)) return
@@ -127,7 +127,7 @@ export class PackMeta {
 		public supportedFormats: PackMetaFormats[] = [],
 		public description = 'Animated Java Resource Pack',
 		public overlayEntries = new Set<OverlayEntry>()
-	) {}
+	) { }
 
 	read() {
 		if (!fs.existsSync(this.path)) return

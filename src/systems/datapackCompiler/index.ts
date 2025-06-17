@@ -671,6 +671,8 @@ async function generateRootEntityPassengers(
 			break
 		case '1.21.5':
 			dataEntity.set('id', new NbtString('minecraft:item_display'))
+		case '1.21.6':
+			dataEntity.set('id', new NbtString('minecraft:item_display'))
 	}
 	passengers.add(
 		dataEntity
@@ -772,6 +774,21 @@ async function generateRootEntityPassengers(
 						)
 						break
 					}
+					case '1.21.6': {
+						item.set(
+							'components',
+							new NbtCompound()
+								.set('minecraft:item_model', new NbtString(variantModel.item_model))
+								.set(
+									'minecraft:custom_model_data',
+									new NbtCompound().set(
+										'strings',
+										new NbtList([new NbtString('default')])
+									)
+								)
+						)
+						break
+					}
 					default: {
 						throw new Error(
 							`Unsupported Minecraft version '${version}' for item display!`
@@ -817,6 +834,16 @@ async function generateRootEntityPassengers(
 						)
 						break
 					case '1.21.5':
+						passenger.set(
+							'text',
+							NbtTag.fromString(
+								node.text
+									? node.text.toString()
+									: "{ text: 'Invalid Text Component' }"
+							)
+						)
+						break
+					case '1.21.6':
 						passenger.set(
 							'text',
 							NbtTag.fromString(
@@ -913,9 +940,8 @@ async function createAnimationStorage(rig: IRenderedRig, animations: IRenderedAn
 		PROGRESS_DESCRIPTION.set(`Creating Animation Storage for '${animation.storage_name}'`)
 		let frames = new NbtCompound()
 		const addFrameDataCommand = () => {
-			const str = `data modify storage aj.${
-				Project!.animated_java.export_namespace
-			}:animations ${animation.storage_name} merge value ${frames.toString()}`
+			const str = `data modify storage aj.${Project!.animated_java.export_namespace
+				}:animations ${animation.storage_name} merge value ${frames.toString()}`
 			dataCommands.push(str)
 			frames = new NbtCompound()
 		}
@@ -1075,9 +1101,9 @@ export default async function compileDataPack(
 		const versionedDataPackFolder =
 			targetVersions.length > 1
 				? PathModule.join(
-						options.dataPackFolder,
-						`animated_java_${version.replaceAll('.', '_')}`
-				  )
+					options.dataPackFolder,
+					`animated_java_${version.replaceAll('.', '_')}`
+				)
 				: coreDataPackFolder
 
 		await dataPackCompiler({
@@ -1373,17 +1399,17 @@ async function writeFiles(exportedFiles: Map<string, ExportedFile>, dataPackFold
 
 					const path = isTag
 						? PathModule.join(
-								dataFolder,
-								location.namespace,
-								'tags/functions',
-								location.path + '.json'
-						  )
+							dataFolder,
+							location.namespace,
+							'tags/functions',
+							location.path + '.json'
+						)
 						: PathModule.join(
-								dataFolder,
-								location.namespace,
-								'functions',
-								location.path + '.mcfunction'
-						  )
+							dataFolder,
+							location.namespace,
+							'functions',
+							location.path + '.mcfunction'
+						)
 					console.log('Checking path:', path)
 					if (
 						!(
@@ -1404,8 +1430,7 @@ async function writeFiles(exportedFiles: Map<string, ExportedFile>, dataPackFold
 				if (!exists) {
 					const parentLocation = parseDataPackPath(path)
 					console.warn(
-						`The referenced ${isTag ? 'tag' : 'function'} '${value}' in '${
-							parentLocation?.resourceLocation || path
+						`The referenced ${isTag ? 'tag' : 'function'} '${value}' in '${parentLocation?.resourceLocation || path
 						}' does not exist! Removing reference...`
 					)
 				}
