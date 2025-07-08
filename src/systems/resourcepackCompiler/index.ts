@@ -17,6 +17,7 @@ const VERSIONS = {
 	'1.21.4': _1_21_4,
 	'1.21.5': _1_21_4,
 	'1.21.6': _1_21_4,
+	'1.21.7': _1_21_4,
 }
 
 interface ResourcePackCompilerOptions {

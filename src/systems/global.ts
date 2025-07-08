@@ -3,7 +3,7 @@ import { getDataPackFormat } from '../util/minecraftUtil'
 import { IntentionalExportError } from './exporter'
 import { sortObjectKeys } from './util'
 
-export type MinecraftVersion = '1.20.4' | '1.20.5' | '1.21.0' | '1.21.2' | '1.21.4' | '1.21.5' | '1.21.6'
+export type MinecraftVersion = '1.20.4' | '1.20.5' | '1.21.0' | '1.21.2' | '1.21.4' | '1.21.5' | '1.21.6' | '1.21.7'
 
 interface OldSerializedAJMeta {
 	[key: string]: {

@@ -11,9 +11,8 @@ import { hashAnimations, renderProjectAnimations } from './animationRenderer'
 import compileDataPack from './datapackCompiler'
 import resourcepackCompiler from './resourcepackCompiler'
 import { hashRig, renderRig } from './rigRenderer'
-import { isCubeValid } from './util'
 
-export class IntentionalExportError extends Error {}
+export class IntentionalExportError extends Error { }
 
 export function getExportPaths() {
 	const aj = Project!.animated_java
@@ -169,19 +168,6 @@ async function actuallyExportProject(forceSave = true) {
 
 export async function exportProject(forceSave = true) {
 	if (!Project) return // TODO: Handle this error better
-
-	if (
-		// Check if 1.21.3 is newer than the target version
-		// compareVersions('1.21.3', Project.animated_java.target_minecraft_versions) &&
-		!Cube.all.allAre(c => isCubeValid(c))
-	) {
-		Blockbench.showMessageBox({
-			title: translate('misc.failed_to_export.title'),
-			message: translate('misc.failed_to_export.invalid_rotation.message'),
-			buttons: [translate('misc.failed_to_export.button')],
-		})
-		return
-	}
 
 	blueprintSettingErrors.set({})
 	const settingsDialog = openBlueprintSettingsDialog()!

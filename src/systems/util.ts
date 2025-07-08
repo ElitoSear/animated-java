@@ -108,11 +108,8 @@ export function isCubeValid(cube: Cube) {
 		&&
 		// Make sure the cube is rotated in one of the allowed 22.5 degree increments
 		(
-			rotation === -45   ||
-			rotation === -22.5 ||
-			rotation === 0     ||
-			rotation === 22.5  ||
-			rotation === 45
+			rotation >= -45 &&
+			rotation <= 45
 		)
 	) {
 		return true

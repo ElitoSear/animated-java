@@ -673,6 +673,8 @@ async function generateRootEntityPassengers(
 			dataEntity.set('id', new NbtString('minecraft:item_display'))
 		case '1.21.6':
 			dataEntity.set('id', new NbtString('minecraft:item_display'))
+		case '1.21.7':
+			dataEntity.set('id', new NbtString('minecraft:item_display'))
 	}
 	passengers.add(
 		dataEntity
@@ -789,6 +791,21 @@ async function generateRootEntityPassengers(
 						)
 						break
 					}
+					case '1.21.7': {
+						item.set(
+							'components',
+							new NbtCompound()
+								.set('minecraft:item_model', new NbtString(variantModel.item_model))
+								.set(
+									'minecraft:custom_model_data',
+									new NbtCompound().set(
+										'strings',
+										new NbtList([new NbtString('default')])
+									)
+								)
+						)
+						break
+					}
 					default: {
 						throw new Error(
 							`Unsupported Minecraft version '${version}' for item display!`
@@ -800,8 +817,14 @@ async function generateRootEntityPassengers(
 					BoneConfig.fromJSON(node.configs.default).toNBT(passenger)
 				}
 
-				passenger.set('height', new NbtFloat(aj.bounding_box[1]))
-				passenger.set('width', new NbtFloat(aj.bounding_box[0]))
+				if (aj.bounding_box[0] > 2) {
+					passenger.set('width', new NbtFloat(aj.bounding_box[0]))
+				}
+
+				if (aj.bounding_box[1] > 2) {
+					passenger.set('height', new NbtFloat(aj.bounding_box[1]))
+				}
+
 				break
 			}
 			case 'text_display': {
@@ -817,8 +840,13 @@ async function generateRootEntityPassengers(
 				passenger.set('interpolation_duration', new NbtInt(aj.interpolation_duration))
 				passenger.set('teleport_duration', new NbtInt(0))
 
-				passenger.set('height', new NbtFloat(aj.bounding_box[1]))
-				passenger.set('width', new NbtFloat(aj.bounding_box[0]))
+				if (aj.bounding_box[0] > 2) {
+					passenger.set('width', new NbtFloat(aj.bounding_box[0]))
+				}
+
+				if (aj.bounding_box[1] > 2) {
+					passenger.set('height', new NbtFloat(aj.bounding_box[1]))
+				}
 
 				switch (version) {
 					case '1.20.4':
@@ -844,6 +872,16 @@ async function generateRootEntityPassengers(
 						)
 						break
 					case '1.21.6':
+						passenger.set(
+							'text',
+							NbtTag.fromString(
+								node.text
+									? node.text.toString()
+									: "{ text: 'Invalid Text Component' }"
+							)
+						)
+						break
+					case '1.21.7':
 						passenger.set(
 							'text',
 							NbtTag.fromString(
