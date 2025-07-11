@@ -117,11 +117,7 @@ dir <%export_namespace%> {
 					}
 					REPEAT (Object.values(rig.nodes).filter(v => v.type === 'camera')) as node {
 						block select_camera_<%node.path_name%> { with entity @s data.cameras.<%node.storage_name%>
-							$execute \
-								as $(uuid) \
-								positioned ^$(posx) ^$(posy) ^$(posz) \
-								rotated ~$(roty) ~$(rotx) \
-							run tp @s ~ ~ ~ ~ ~
+							$tp $(uuid) ^$(posx) ^$(posy) ^$(posz) ~$(roty) ~$(rotx)
 						}
 					}
 				}
@@ -576,7 +572,7 @@ dir <%export_namespace%> {
 						^<%roundTo(camera.default_transform.pos[0], 10)%> \
 						^<%roundTo(camera.default_transform.pos[1], 10)%> \
 						^<%roundTo(camera.default_transform.pos[2], 10)%> \
-						{Tags:<%getNodeTags(camera, rig)%>, teleport_duration: 2}
+						{Tags:<%getNodeTags(camera, rig)%>, teleport_duration: 1}
 					execute \
 						as @n[ \
 							type=minecraft:item_display, \
