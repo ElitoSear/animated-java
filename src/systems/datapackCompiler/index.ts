@@ -675,6 +675,10 @@ async function generateRootEntityPassengers(
 			dataEntity.set('id', new NbtString('minecraft:item_display'))
 		case '1.21.7':
 			dataEntity.set('id', new NbtString('minecraft:item_display'))
+		case '1.21.8':
+			dataEntity.set('id', new NbtString('minecraft:item_display'))
+		case '1.21.9':
+			dataEntity.set('id', new NbtString('minecraft:item_display'))
 	}
 	passengers.add(
 		dataEntity
@@ -806,6 +810,36 @@ async function generateRootEntityPassengers(
 						)
 						break
 					}
+					case '1.21.8': {
+						item.set(
+							'components',
+							new NbtCompound()
+								.set('minecraft:item_model', new NbtString(variantModel.item_model))
+								.set(
+									'minecraft:custom_model_data',
+									new NbtCompound().set(
+										'strings',
+										new NbtList([new NbtString('default')])
+									)
+								)
+						)
+						break
+					}
+					case '1.21.9': {
+						item.set(
+							'components',
+							new NbtCompound()
+								.set('minecraft:item_model', new NbtString(variantModel.item_model))
+								.set(
+									'minecraft:custom_model_data',
+									new NbtCompound().set(
+										'strings',
+										new NbtList([new NbtString('default')])
+									)
+								)
+						)
+						break
+					}
 					default: {
 						throw new Error(
 							`Unsupported Minecraft version '${version}' for item display!`
@@ -882,6 +916,26 @@ async function generateRootEntityPassengers(
 						)
 						break
 					case '1.21.7':
+						passenger.set(
+							'text',
+							NbtTag.fromString(
+								node.text
+									? node.text.toString()
+									: "{ text: 'Invalid Text Component' }"
+							)
+						)
+						break
+					case '1.21.8':
+						passenger.set(
+							'text',
+							NbtTag.fromString(
+								node.text
+									? node.text.toString()
+									: "{ text: 'Invalid Text Component' }"
+							)
+						)
+						break
+					case '1.21.9':
 						passenger.set(
 							'text',
 							NbtTag.fromString(
@@ -1179,7 +1233,8 @@ export default async function compileDataPack(
 		`Animated Java Data Pack for ${targetVersions.join(', ')}`
 	)
 	packMeta.read()
-	packMeta.pack_format = getDataPackFormat(targetVersions[0])
+	packMeta.min_format = getDataPackFormat(targetVersions[0])
+	packMeta.max_format = getDataPackFormat(targetVersions[0])
 	packMeta.supportedFormats = []
 
 	if (targetVersions.length > 1) {

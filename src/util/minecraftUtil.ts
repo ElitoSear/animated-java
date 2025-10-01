@@ -239,49 +239,57 @@ export function sortMCVersions(versions: MinecraftVersion[]): MinecraftVersion[]
 	})
 }
 
-export function getDataPackFormat(version: MinecraftVersion): number {
+export function getDataPackFormat(version: MinecraftVersion): number[] {
 	switch (version) {
 		case '1.20.4':
-			return 26
+			return [26, 0]
 		case '1.20.5':
-			return 41
+			return [41, 0]
 		case '1.21.0':
-			return 48
+			return [48, 0]
 		case '1.21.2':
-			return 57
+			return [57, 0]
 		case '1.21.4':
-			return 61
+			return [61, 0]
 		case '1.21.5':
-			return 71
+			return [71, 0]
 		case '1.21.6':
-			return 80
+			return [80, 0]
 		case '1.21.7':
-			return 81
+			return [81, 0]
+		case '1.21.8':
+			return [82, 0]
+		case '1.21.9':
+			return [88, 0]
 		default:
-			return Infinity
+			return [Infinity, Infinity]
 	}
 }
 
-export function getResourcePackFormat(version: MinecraftVersion): number {
+export function getResourcePackFormat(version: MinecraftVersion): number[] {
 	switch (version) {
 		case '1.20.4':
-			return 22
+			return [22, 0]
 		case '1.20.5':
-			return 32
+			return [32, 0]
 		case '1.21.0':
-			return 34
+			return [34, 0]
 		case '1.21.2':
-			return 42
+			return [42, 0]
 		case '1.21.4':
-			return 46
+			return [46, 0]
 		case '1.21.5':
-			return 55
+			return [55, 0]
 		case '1.21.6':
-			return 63
+			return [63, 0]
 		case '1.21.7':
-			return 64
+			return [64, 0]
+		case '1.21.8':
+			return [64, 0]
+		case '1.21.9':
+			return [69, 0]
 		default:
-			return Infinity
+			return [Infinity, Infinity]
 	}
 }
 

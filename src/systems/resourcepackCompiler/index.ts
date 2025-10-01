@@ -18,6 +18,8 @@ const VERSIONS = {
 	'1.21.5': _1_21_4,
 	'1.21.6': _1_21_4,
 	'1.21.7': _1_21_4,
+	'1.21.8': _1_21_4,
+	'1.21.9': _1_21_4,
 }
 
 interface ResourcePackCompilerOptions {
@@ -110,7 +112,8 @@ export default async function compileResourcePack(
 		`Animated Java Resource Pack for ${targetVersions.join(', ')}`
 	)
 	packMeta.read()
-	packMeta.pack_format = getResourcePackFormat(targetVersions[0])
+	packMeta.min_format = getResourcePackFormat(targetVersions[0])
+	packMeta.max_format = getResourcePackFormat(targetVersions[0])
 	packMeta.supportedFormats = []
 
 	if (targetVersions.length > 1) {

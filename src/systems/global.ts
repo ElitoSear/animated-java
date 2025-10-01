@@ -3,7 +3,7 @@ import { getDataPackFormat } from '../util/minecraftUtil'
 import { IntentionalExportError } from './exporter'
 import { sortObjectKeys } from './util'
 
-export type MinecraftVersion = '1.20.4' | '1.20.5' | '1.21.0' | '1.21.2' | '1.21.4' | '1.21.5' | '1.21.6' | '1.21.7'
+export type MinecraftVersion = '1.20.4' | '1.20.5' | '1.21.0' | '1.21.2' | '1.21.4' | '1.21.5' | '1.21.6' | '1.21.7' | '1.21.8' | '1.21.9'
 
 interface OldSerializedAJMeta {
 	[key: string]: {
@@ -111,7 +111,8 @@ interface OverlayEntry {
 }
 export interface SerializedPackMeta {
 	pack?: {
-		pack_format?: number
+		min_format?: number[]
+		max_format?: number[]
 		supported_formats?: PackMetaFormats[]
 		description?: string
 	}
@@ -123,7 +124,8 @@ export interface SerializedPackMeta {
 export class PackMeta {
 	constructor(
 		public path: string,
-		public pack_format = getDataPackFormat('1.20.4'),
+		public min_format = getDataPackFormat('1.21.9'),
+		public max_format = getDataPackFormat('1.21.9'),
 		public supportedFormats: PackMetaFormats[] = [],
 		public description = 'Animated Java Resource Pack',
 		public overlayEntries = new Set<OverlayEntry>()
@@ -136,7 +138,8 @@ export class PackMeta {
 		try {
 			const content = JSON.parse(raw)
 			if (content.pack) {
-				this.pack_format = content.pack.pack_format ?? this.pack_format
+				this.min_format = content.pack.min_format ?? this.min_format
+				this.max_format = content.pack.max_format ?? this.max_format
 				this.description = content.pack.description ?? this.description
 				this.supportedFormats = content.pack.supported_formats ?? this.supportedFormats
 			}
@@ -155,7 +158,8 @@ export class PackMeta {
 	toJSON(): SerializedPackMeta {
 		const json: SerializedPackMeta = {
 			pack: {
-				pack_format: this.pack_format,
+				min_format: this.min_format,
+				max_format: this.max_format,
 				supported_formats:
 					this.supportedFormats.length > 0 ? this.supportedFormats : undefined,
 				description: this.description,
